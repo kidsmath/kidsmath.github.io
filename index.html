@@ -42,27 +42,42 @@
             for (var i = 0; i < 20; i++) {
                 var n1 = parseInt(Math.random() * 100) % 20;
                 var n2 = parseInt(Math.random() * 100) % 20;
+                /* checkmark: &sqrt;  cross: &times; */
                 $('#content').append('<p><span id="max' + i + '">' +
                     Math.max(n1, n2) + '</span> - ' + '<span id="min' + i + '">' + Math.min(n1, n2) +
                     '</span> = <input id="' + i + '" type="number" /><span class="correct" id="correct' + i +
-                    '">&Sqrt;</span><span class="wrong" id="wrong' + i + '">&times;</span></p>');
+                    '">☺</span><span class="wrong" id="wrong' + i + '">☹</span></p>');
             }
 
             $('input').blur(function (elem) {
+                if (!elem.currentTarget.value) {
+                    // empty input, do nothing.
+                    return;
+                }
+
                 var r = parseInt(elem.currentTarget.value);
                 var id = elem.currentTarget.id;
                 var max = parseInt($('#max' + id).html());
                 var min = parseInt($('#min' + id).html());
-                console.log(max);
-                console.log(min);
-                console.log(r);
                 if (max - min === r) {
-                    $('#correct' + id).show();
-                    $('#wrong' + id).hide();
+                    $('#wrong' + id).fadeOut(function () {
+                        $('#correct' + id).fadeIn();
+                    });
                 }
                 else {
-                    $('#correct' + id).hide();
-                    $('#wrong' + id).show();
+                    $('#correct' + id).fadeOut(function () {
+                        $('#wrong' + id).fadeIn();
+                    });
+                }
+            });
+
+            $('input').keydown(function (e) {
+                if (e.keyCode === 13) {
+                    // Enter key, move focus to next input if not empty.
+                    if ($(this).val()) {
+                        var index = $('input').index(this) + 1;
+                        $('input').eq(index).focus();
+                    }
                 }
             });
         });
