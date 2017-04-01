@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Kids Math</title>
+
+    <style type="text/css">
+        .correct {
+            color: green;
+            display: none;
+            margin-left: 10px;
+        }
+        
+        .wrong {
+            color: red;
+            display: none;
+            margin-left: 10px;
+        }
+        
+        #content {
+            padding-left: 1em;
+            padding-right: 1em;
+            font-size: 4em;
+        }
+        
+        span {
+            display: inline-block;
+            width: 1em;
+        }
+        
+        input {
+            width: 2em;
+            font-size: 1em;
+            padding-left: .5em;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            for (var i = 0; i < 20; i++) {
+                var n1 = parseInt(Math.random() * 100) % 20;
+                var n2 = parseInt(Math.random() * 100) % 20;
+                $('#content').append('<p><span id="max' + i + '">' +
+                    Math.max(n1, n2) + '</span> - ' + '<span id="min' + i + '">' + Math.min(n1, n2) +
+                    '</span> = <input id="' + i + '" type="number" /><span class="correct" id="correct' + i +
+                    '">&Sqrt;</span><span class="wrong" id="wrong' + i + '">&times;</span></p>');
+            }
+
+            $('input').blur(function (elem) {
+                var r = parseInt(elem.currentTarget.value);
+                var id = elem.currentTarget.id;
+                var max = parseInt($('#max' + id).html());
+                var min = parseInt($('#min' + id).html());
+                console.log(max);
+                console.log(min);
+                console.log(r);
+                if (max - min === r) {
+                    $('#correct' + id).show();
+                    $('#wrong' + id).hide();
+                }
+                else {
+                    $('#correct' + id).hide();
+                    $('#wrong' + id).show();
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div id="content">
+    </div>
+</body>
+
+</html>
