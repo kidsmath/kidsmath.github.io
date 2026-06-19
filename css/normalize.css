@@ -423,13 +423,3 @@ th {
   padding: 0;
 }
 
-.center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.next-level {
-  margin-right: 10px;
-  color: orange !important;
-  border: 1px solid orange !important;
-}
